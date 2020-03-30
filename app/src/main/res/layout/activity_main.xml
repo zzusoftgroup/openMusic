@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:contentDescription="albumImg"
         android:id="@+id/album"
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -44,23 +45,21 @@
             <TextView
                 android:id="@+id/current_time"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="0:00"></TextView>
+                android:layout_width="wrap_content" />
 
-            <ProgressBar
+            <SeekBar
                 android:id="@+id/pb_music"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 style="?android:progressBarStyleHorizontal"
                 android:max="100">
 
-            </ProgressBar>
+            </SeekBar>
 
             <TextView
                 android:id="@+id/total_time"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="3:20">
+                android:layout_width="wrap_content">
 
             </TextView>
         </LinearLayout>

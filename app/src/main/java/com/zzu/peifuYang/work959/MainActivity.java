@@ -1,41 +1,39 @@
 package com.zzu.peifuYang.work959;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.zzu.peifuYang.work959.util.MusicProgressBarUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.wcy.lrcview.LrcView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends Activity implements View.OnClickListener{
     private ImageButton pre_music;
     private ImageButton next_music;
     private ImageButton pause_play;
+    private TextView totalTime_tv;
+    private TextView currentTime_tv;
+    private SeekBar seekBar;
+    boolean isSeekbarChaning =false;
+    private Timer timer;
     private MediaPlayer mediaPlayer = new MediaPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +58,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void initMediaPlayer() {
         try {
-            File file = new File(Environment.getExternalStorageDirectory(), "1.mp3");
-            mediaPlayer.setDataSource(file.getPath());//指定音频文件路径
+            Uri rawUri = Uri.parse("android.resource://" + getPackageName() + "/" +R.raw.goodbye);
+            mediaPlayer.setDataSource(MainActivity.this,rawUri);//指定音频文件路径
             mediaPlayer.setLooping(true);//设置为循环播放
             mediaPlayer.prepare();//初始化播放器MediaPlayer
+            setProgressBar();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void setProgressBar(){
+        totalTime_tv = findViewById(R.id.total_time);
+        currentTime_tv = findViewById(R.id.current_time);
+        int totalTime = mediaPlayer.getDuration()/1000;
+        totalTime_tv.setText(MusicProgressBarUtil.calculateTime(totalTime));
+        int currentTime = mediaPlayer.getCurrentPosition()/1000;
+        currentTime_tv.setText(MusicProgressBarUtil.calculateTime(currentTime));
+
+        seekBar = findViewById(R.id.pb_music);
+        seekBar.setMax(mediaPlayer.getDuration());
+        //绑定监听器，监听拖动到指定位置
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int currentTime = mediaPlayer.getCurrentPosition()/1000;
+                currentTime_tv.setText(MusicProgressBarUtil.calculateTime(currentTime));
+            }
+            /*
+             * 通知用户已经开始一个触摸拖动手势。
+             * */
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeekbarChaning = true;
+            }
+            /*
+             * 当手停止拖动进度条时执行该方法
+             * 首先获取拖拽进度
+             * 将进度对应设置给MediaPlayer
+             * */
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                isSeekbarChaning = false;
+                mediaPlayer.seekTo(seekBar.getProgress());//在当前位置播放
+                currentTime_tv.setText(MusicProgressBarUtil.calculateTime(mediaPlayer.getCurrentPosition() / 1000));
+            }
+        });
+
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -92,6 +130,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //如果没在播放中，立刻开始播放。
                 if(!mediaPlayer.isPlaying()){
                     mediaPlayer.start();
+                    timer = new Timer();//时间监听器
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if(!isSeekbarChaning){
+                                seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                            }
+                        }
+                    },0,50);
                 }else {
                     mediaPlayer.pause();
                 }
@@ -116,12 +163,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showLyric(){
         LrcView lrcView = findViewById(R.id.lyric);
-//        lrcView.loadLrcByUrl("http://pic.landun.tech/a55c89d2c0717124add9c5f70fb04074.lrc?download/27.%E6%9C%88%E5%9C%86%E6%9B%B2.lrc","utf-8");
-        String mainLrcText = getLrcText("send_it_en.lrc");
-        String secondLrcText = getLrcText("send_it_cn.lrc");
-        lrcView.loadLrc(mainLrcText, secondLrcText);
-        if (!lrcView.hasLrc())
-        Toast.makeText(this, "歌词无效", Toast.LENGTH_LONG).show();
+        String lrcText = getLrcText("秦洋-再见.lrc");
+        lrcView.loadLrc(lrcText);
 
     }
     private String getLrcText(String fileName) {
