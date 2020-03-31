@@ -1,5 +1,10 @@
 package com.zzu.peifuYang.work959.util;
 
+import android.content.Context;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MusicProgressBarUtil {
     //计算播放时间
     public static String calculateTime(int time){
@@ -33,5 +38,19 @@ public class MusicProgressBarUtil {
             }
         }
         return null;
+    }
+    public static String getLrcText(String fileName, Context context) {
+        String lrcText = null;
+        try {
+            InputStream is = context.getAssets().open(fileName);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            lrcText = new String(buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lrcText;
     }
 }
