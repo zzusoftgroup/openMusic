@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">work0959</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rap">#Rap</string>
+    <string name="pop">#Pop</string>
+    <string name="eletronic">#Eletronic</string>
 </resources>

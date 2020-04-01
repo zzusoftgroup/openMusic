@@ -1,7 +1,6 @@
 package com.zzu.peifuYang.work959;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.zzu.peifuYang.work959.util.MusicProgressBarUtil;
 
@@ -23,7 +23,7 @@ import java.util.Timer;
 
 import me.wcy.lrcview.LrcView;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener{
     private ImageButton pre_music;
     private ImageButton next_music;
     private ImageButton pause_play;
@@ -35,6 +35,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
     private Timer timer;
     private LrcView lrcView;
     private MediaPlayer mediaPlayer = new MediaPlayer();
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 //        填充所有控件 设置监听
         init_view();
         initMediaPlayer();
+
 
 
     }
