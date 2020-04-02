@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/black">
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="match_parent"
-        android:id="@+id/music_image_list"
-        android:src="@drawable/album" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/item_album"
+        android:src="@drawable/album"
+        android:layout_marginRight="15dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/music_name"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/item_song_name"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-black"
             android:text="燕归巢"/>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/artist_list"
-            android:text="许嵩"
-            />
+            android:layout_height="wrap_content"
+            android:id="@+id/item_artist_name"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/gray"
+            android:text="Dua Lipa" />
     </LinearLayout>
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/select_status_btm">
-    </Button>
+        android:id="@+id/item_more_btn"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/ic_more">
+    </ImageButton>
 
 
 

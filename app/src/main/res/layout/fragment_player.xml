@@ -11,15 +11,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="Play"
+        android:text="PLAY"
         android:textSize="20dp"
-        android:fontFamily="sans-serif-black"/>
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/white"/>
+
     <me.wcy.lrcview.LrcView
-        android:id="@+id/lyric"
+        android:id="@+id/lyric_player"
         android:layout_width="270dp"
         android:layout_height="340dp"
-        android:layout_marginTop="120dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="120dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -36,21 +38,21 @@
             android:id="@+id/song_tag">
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:background="@color/lightYellow"
+                android:layout_height="22dp"
+                android:background="@drawable/shape"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
                 android:text="#Funk" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="22dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/lightYellow"
+                android:background="@drawable/shape"
                 android:text="#Eletroinc" />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                android:background="@color/lightYellow"
+                android:layout_height="22dp"
+                android:background="@drawable/shape"
                 android:text="#Rap" />
         </LinearLayout>
         <LinearLayout

@@ -7,21 +7,25 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import me.wcy.lrcview.LrcView;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class playerFragment extends Fragment {
-
+    private ViewGroup root;
     public playerFragment() {
         // Required empty public constructor
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_player, container, false);
+        root = (ViewGroup) inflater.inflate(R.layout.fragment_player, container, false);
         return root;
+    }
+    public LrcView getLrcView(){
+        return root.findViewById(R.id.lyric_player);
     }
 }

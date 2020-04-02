@@ -14,33 +14,53 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discover"
+            android:text="DISCOVER"
             android:fontFamily="sans-serif-black"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:textColor="@color/white"/>
         <!--    歌单封面-->
         <ImageView
             android:contentDescription="albumImg"
-            android:id="@+id/album"
+            android:id="@+id/album_discover"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/album"
             android:layout_gravity="center_horizontal" />
         <!--    播放按钮-->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <ImageButton
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_play_white_36dp"
+        android:layout_marginBottom="10dp">
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="28dp"
+        android:id="@+id/play_discover"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+
+        android:src="@drawable/ic_discover_play"
+        android:background="@drawable/shape"
         />
-    </LinearLayout>
+        <ImageButton
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_more_discover" />
+    </RelativeLayout>
 <!--        歌曲列表-->
-    <ListView
-        android:id="@+id/my_recycler_view"
-        android:scrollbars="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbars="vertical"
+            android:layout_centerInParent="true"
+            android:layout_width="360dp"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
     </LinearLayout>
+
 </FrameLayout>

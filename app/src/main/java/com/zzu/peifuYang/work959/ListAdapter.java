@@ -1,48 +1,58 @@
 package com.zzu.peifuYang.work959;
+
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Map;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> {
-    private String[] mDataset;
+
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewFiller> {
+    private Map<String,String>[] mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView textView;
-        public MyViewHolder(TextView v) {
+    public static class  ViewFiller extends RecyclerView.ViewHolder{
+        public final TextView song_name;
+        private final TextView artist_name;
+        private final ImageView album;
+        private final ImageButton more_btn;
+        public ViewFiller(View v) {
             super(v);
-            textView = v;
+             song_name = v.findViewById(R.id.item_song_name);
+             artist_name = v.findViewById(R.id.item_artist_name);
+             album = v.findViewById(R.id.item_album);
+             more_btn = v.findViewById(R.id.item_more_btn);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ListAdapter(String[] myDataset) {
+    public ListAdapter(Map<String,String>[] myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public ListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public ListAdapter.ViewFiller onCreateViewHolder(ViewGroup parent,
                                                        int viewType) {
         // create a new view
-        TextView v = (TextView) LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_tem, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
+        ViewFiller vh = new ViewFiller(v);
         return vh;
     }
-
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.textView.setText(mDataset[position]);
+    public void onBindViewHolder(ViewFiller holder, int position) {
+        holder.song_name.setText(mDataset[position].get("song_name"));
+        holder.artist_name.setText(mDataset[position].get("artist_name"));
+//        holder.album.setImageResource(R.id.album_discover);
+
 
     }
 
@@ -51,5 +61,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyViewHolder> 
     public int getItemCount() {
         return mDataset.length;
     }
+
 }
     
