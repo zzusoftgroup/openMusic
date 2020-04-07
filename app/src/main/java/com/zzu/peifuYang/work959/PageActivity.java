@@ -20,8 +20,8 @@ public class PageActivity extends FragmentActivity {
     private FragmentStateAdapter pagerAdapter;
     private playerFragment player;
     private discoverFragment discover;
-    private LrcView lrcView;
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private static volatile LrcView lrcView;
+    private static MediaPlayer mediaPlayer = new MediaPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +36,34 @@ public class PageActivity extends FragmentActivity {
         fragments.add(discover);
         pagerAdapter = new PageAdapter(this,fragments);
         mPager.setAdapter(pagerAdapter);
-//        init_view();
-//        showLyric();
     }
-    public void init_view(){
-        lrcView = player.getView().findViewById(R.id.lyric_player);
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String lrcText = MusicProgressBarUtil.getLrcText("秦洋-再见.lrc",this);
+        new Thread(){
+            @Override
+            public void run() {
+                //volatile是其可见
+                while (lrcView==null)
+                {
+                    try {
+                        sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    lrcView.loadLrc(lrcText);
+                }
+            }
+        }.start();
     }
-    public void showLyric(){
+
+    public static void init_view(LrcView View){
+        lrcView=View;
+        showLyric();
+    }
+    public static void showLyric(){
         lrcView.setLabel("无歌词");
         lrcView.setDraggable(true, new LrcView.OnPlayClickListener() {
             @Override
@@ -54,8 +75,7 @@ public class PageActivity extends FragmentActivity {
                 return true;
             }
         });
-        String lrcText = MusicProgressBarUtil.getLrcText("秦洋-再见.lrc",this);
-        lrcView.loadLrc(lrcText);
+
     }
     @Override
     public void onBackPressed() {

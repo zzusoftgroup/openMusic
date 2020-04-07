@@ -23,6 +23,7 @@ public class playerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(R.layout.fragment_player, container, false);
+        PageActivity.init_view(root.findViewById(R.id.lyric_player));
         return root;
     }
     public LrcView getLrcView(){

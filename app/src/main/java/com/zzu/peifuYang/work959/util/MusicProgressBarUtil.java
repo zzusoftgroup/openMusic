@@ -1,11 +1,12 @@
 package com.zzu.peifuYang.work959.util;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MusicProgressBarUtil {
+public class MusicProgressBarUtil  {
     //计算播放时间
     public static String calculateTime(int time){
         int minute;
