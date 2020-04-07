@@ -45,7 +45,7 @@ public class PageActivity extends FragmentActivity {
         new Thread(){
             @Override
             public void run() {
-                //volatile是其可见
+                //volatile使其可见
                 while (lrcView==null)
                 {
                     try {
